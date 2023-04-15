@@ -4,6 +4,7 @@ using CW17_1.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CW17_1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230414130048_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +54,7 @@ namespace CW17_1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<Guid?>("AddressId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -63,8 +67,7 @@ namespace CW17_1.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
-                        .IsUnique()
-                        .HasFilter("[AddressId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users", (string)null);
                 });
@@ -73,7 +76,9 @@ namespace CW17_1.Migrations
                 {
                     b.HasOne("CW17_1.Entity.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("CW17_1.Entity.User", "AddressId");
+                        .HasForeignKey("CW17_1.Entity.User", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
                 });

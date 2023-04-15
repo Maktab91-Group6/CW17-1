@@ -44,6 +44,14 @@
 			<a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@Model[i].Id">
 				حذف
 			</a>
+			<a class="btn btn-secondary" asp-controller="Home" asp-action="Edit" asp-route-id="@Model[i].Id">
+				ویرایش
+			</a>
+			@if(@Model[i].AddressId==null){
+						<a class="btn btn-secondary" asp-controller="Home" asp-action="CreateAddress" asp-route-userid="@Model[i].Id">
+					آدرس
+				</a>
+			}
 		</td>
 		
 	</tr>

@@ -1,0 +1,17 @@
+﻿@model AddAddressViewModel
+@{
+}
+
+<div class="container">
+	<form asp-action="CreateAddress" asp-controller="Home" method="post">
+		<label asp-for="Title"></label>
+		<input type="text" class="form-control" asp-for="Title"/>
+		<label asp-for="Description"></label>
+		<input type="text" class="form-control" asp-for="Description"/>
+		
+		<input type="text" class="form-control" asp-for="UserId" hidden/>
+		<br />
+		<input type="submit" class="btn btn-success" value="تایید"/>
+	</form>
+
+</div>

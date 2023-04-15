@@ -47,6 +47,27 @@ namespace CW17_1.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+
+		public IActionResult CreateAddress(int userid)
+		{
+			
+			return View(new AddAddressViewModel(){UserId = userid});
+		}
+		[HttpPost]
+		public IActionResult CreateAddress(AddAddressViewModel address)
+		{
+			var entity = new Address(){Description = address.Description,Title = address.Title};
+			var result=_dbContext.Addresses.Add(entity);
+			//_dbContext.SaveChanges();
+			_dbContext.Members.FirstOrDefault(x => x.Id == address.UserId).AddressId = result.Entity.Id;
+			_dbContext.SaveChanges();
+
+
+
+			return RedirectToAction(nameof(Index));
+		}
+
+
 		public IActionResult Delete(int id)
 		{
 
@@ -56,6 +77,28 @@ namespace CW17_1.Controllers
 			
 			return RedirectToAction(nameof(Index));
 		}
+
+
+
+		[HttpPost]
+		public IActionResult Edit(User user)
+		{
+			_dbContext.Members.FirstOrDefault(m => m.Id == user.Id).Name=user.Name;
+			_dbContext.SaveChanges();
+			return RedirectToAction(nameof(Index));
+		}
+
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			var result=_dbContext.Members.FirstOrDefault(m => m.Id == id);
+			return View(result);
+		}
+
+
+
+
+
 
 		public IActionResult Privacy()
 		{

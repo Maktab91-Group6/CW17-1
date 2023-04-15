@@ -10,6 +10,11 @@ namespace CW17_1.Entity
 
 		public bool IsDeleted { get; set; }
 
+		public Address? Address { get; set; }
+		public Guid? AddressId { get; set; }
+
+
+
 		public User()
 		{
 			IsDeleted=false;
